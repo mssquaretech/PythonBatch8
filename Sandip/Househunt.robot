@@ -1,37 +1,18 @@
 *** Settings ***
-Library          SeleniumLibrary
-
-*** Variables ***
-${url}                         https://househunt.london.ac.uk/
-${Findpropertyxpath}           (//a[@class='nav-link'])[2]
-${Searchxpath}                  (//li[@class='first leaf menu-mlid-1241 search mid-1241']/a)[2]
-${Universityxpath}               ( //div[contains(text(),'University')])[1]
-*** Keywords ***
+Library   SeleniumLibrary
+Resource  ../../Resource/HousehuntSD.robot
+Resource  ../../Configuration/Env3.robot
 
 
 
 *** Test Cases ***
-Launch URL
-   open browser      ${url}       chrome
-   maximize browser window
-   Capture page screenshot
-
-Click on find property
-    Click Element                  ${Findpropertyxpath}
-    capture page screenshot
-
-Navigate to new window
-   switch window        title=Find Your Property | University of London Housing Services
-   capture page screenshot
-
-Click on Search button
-   click element                  ${Searchxpath}
-   capture page screenshot
-   sleep   10
-
-Enter data in Search A Property
-  click element                  ${Universityxpath}
-  input text                     Royal Academy of Music (RAM)
-  capture page screenshot
-  close all browsers
-
+Search Property
+  Given I naviagte to      ${URL}        ${Browser}
+  When I click on Find Your Property
+  And I naviagte to new window
+  And I click on Search Button
+  And I Enter data in University
+  And I enter data in Campus
+  And I click on See Reults Button
+  And I click on Sort dropdown
+  #Then I can see list of Property
